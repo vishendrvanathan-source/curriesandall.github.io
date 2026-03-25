@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curries & All – Home Kitchen, Uvongo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --orange: #E85D04;
+    --red: #9B1D20;
+    --cream: #FDF6EC;
+    --dark: #1A0A00;
+    --card-bg: #FFFFFF;
+    --shadow: 0 8px 32px rgba(155,29,32,0.13);
+    --shadow-hover: 0 16px 48px rgba(155,29,32,0.22);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(26,10,0,0.93);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    border-bottom: 2px solid var(--gold);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: #f5e6c8; font-size: 0.85rem; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-order-btn {
+    background: var(--orange); color: #fff; border: none;
+    padding: 0.45rem 1.2rem; border-radius: 50px; font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer; letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-order-btn:hover { background: var(--red); transform: scale(1.05); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+    background: linear-gradient(160deg, #1A0A00 0%, #3B1500 60%, #1A0A00 100%);
+    padding: 6rem 1.5rem 4rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1600&q=80') center/cover no-repeat;
+    opacity: 0.18;
+  }
+  .hero-spice {
+    position: absolute; width: 420px; height: 420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,160,23,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold); color: var(--dark);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.3rem 1.1rem; border-radius: 50px; margin-bottom: 1.4rem;
+    animation: fadeDown 0.7s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900; line-height: 1.05;
+    color: #fff; margin-bottom: 0.6rem;
+    animation: fadeDown 0.8s 0.1s ease both;
+  }
+  .hero h1 span { color: var(--gold); display: block; }
+  .hero-sub {
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: #e8d5b0; font-weight: 300; max-width: 500px;
+    margin: 0 auto 2.5rem;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    padding: 0.85rem 2.2rem; border-radius: 50px;
+    font-weight: 600; font-size: 0.95rem; letter-spacing: 0.04em;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.22s, transform 0.18s, box-shadow 0.22s;
+    box-shadow: 0 4px 20px rgba(232,93,4,0.4);
+  }
+  .btn-primary:hover { background: var(--red); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(155,29,32,0.45); }
+  .btn-secondary {
+    background: transparent; color: var(--gold);
+    padding: 0.85rem 2.2rem; border-radius: 50px;
+    font-weight: 600; font-size: 0.95rem; letter-spacing: 0.04em;
+    border: 2px solid var(--gold); cursor: pointer; text-decoration: none;
+    transition: background 0.22s, color 0.22s, transform 0.18s;
+  }
+  .btn-secondary:hover { background: var(--gold); color: var(--dark); transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: rgba(255,255,255,0.45); font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; animation: bounce 2s infinite;
+  }
+  .hero-scroll svg { stroke: rgba(255,255,255,0.45); }
+
+  /* ── INFO STRIP ── */
+  .info-strip {
+    background: var(--dark);
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0;
+    border-bottom: 2px solid var(--gold);
+  }
+  .info-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 1rem 2.5rem; color: #e8d5b0; font-size: 0.83rem;
+    border-right: 1px solid rgba(212,160,23,0.2);
+  }
+  .info-item:last-child { border-right: none; }
+  .info-item svg { flex-shrink: 0; stroke: var(--gold); }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    text-align: center; padding: 5rem 1.5rem 0;
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 0.7rem;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--dark); line-height: 1.15;
+  }
+  .section-divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--orange));
+    margin: 1rem auto 0; border-radius: 2px;
+  }
+
+  /* ── MENU SECTION ── */
+  .menu-section { padding: 3rem 5vw 2rem; }
+  .category-block { margin-bottom: 4rem; }
+  .category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.55rem; color: var(--red);
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1.8rem; padding-bottom: 0.7rem;
+    border-bottom: 2px solid rgba(212,160,23,0.3);
+  }
+  .category-title .cat-icon { font-size: 1.4rem; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.6rem;
+  }
+
+  /* ── MENU CARD ── */
+  .menu-card {
+    background: var(--card-bg);
+    border-radius: 18px; overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s;
+    position: relative;
+  }
+  .menu-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+  }
+  .menu-card:hover .card-img img { transform: scale(1.09); }
+
+  .card-img {
+    position: relative; height: 195px; overflow: hidden;
+  }
+  .card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.45s cubic-bezier(.22,.68,0,1.2);
+    display: block;
+  }
+  .card-img::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,10,0,0.45) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .card-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--gold); color: var(--dark);
+    font-size: 0.78rem; font-weight: 700;
+    padding: 0.25rem 0.7rem; border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+  .card-body { padding: 1.1rem 1.2rem 1.3rem; }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--dark); margin-bottom: 0.3rem;
+  }
+  .card-desc {
+    font-size: 0.78rem; color: #888; margin-bottom: 0.9rem; font-weight: 300;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-price {
+    font-size: 1.15rem; font-weight: 700; color: var(--orange);
+  }
+  .card-btn {
+    background: linear-gradient(135deg, var(--orange), var(--red));
+    color: #fff; border: none; border-radius: 50px;
+    padding: 0.38rem 1rem; font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .card-btn:hover { opacity: 0.88; transform: scale(1.05); }
+
+  /* ── ORDER SECTION ── */
+  .order-section {
+    background: linear-gradient(135deg, var(--dark) 0%, #3B1500 100%);
+    padding: 5rem 5vw;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .order-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=1200&q=70') center/cover no-repeat;
+    opacity: 0.07;
+  }
+  .order-section .section-label { color: var(--gold-light); }
+  .order-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem); color: #fff;
+    margin-bottom: 1rem;
+  }
+  .order-section p { color: #dbc89a; font-size: 1rem; max-width: 480px; margin: 0 auto 2.5rem; font-weight: 300; }
+  .order-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-call {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: var(--gold); color: var(--dark);
+    padding: 0.9rem 2.2rem; border-radius: 50px;
+    font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
+    text-decoration: none; transition: background 0.2s, transform 0.18s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.35);
+  }
+  .btn-call:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-wa {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    background: #25D366; color: #fff;
+    padding: 0.9rem 2.2rem; border-radius: 50px;
+    font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
+    text-decoration: none; transition: background 0.2s, transform 0.18s;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+  }
+  .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #100500;
+    border-top: 2px solid var(--gold);
+    padding: 2.5rem 5vw;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  footer p {
+    color: #9a7d5a; font-size: 0.82rem; line-height: 1.8; font-weight: 300;
+  }
+  footer a { color: var(--gold-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,4,0,0.82);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #fff;
+    border-radius: 22px; overflow: hidden;
+    max-width: 480px; width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    transform: scale(0.88) translateY(20px);
+    transition: transform 0.35s cubic-bezier(.22,.68,0,1.2);
+    position: relative;
+  }
+  .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+  .modal-img {
+    width: 100%; height: 240px; object-fit: cover; display: block;
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 14px;
+    background: rgba(0,0,0,0.55); border: none; color: #fff;
+    width: 34px; height: 34px; border-radius: 50%; font-size: 1.1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+  }
+  .modal-close:hover { background: var(--red); }
+  .modal-body { padding: 1.5rem 1.8rem 2rem; }
+  .modal-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.3rem; }
+  .modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.55rem; font-weight: 700; color: var(--dark);
+    margin-bottom: 0.3rem;
+  }
+  .modal-price { font-size: 1.35rem; font-weight: 700; color: var(--orange); margin-bottom: 1rem; }
+  .modal-divider { border: none; border-top: 1px solid #f0e6d6; margin: 0.9rem 0; }
+  .modal-desc { font-size: 0.87rem; color: #666; margin-bottom: 1rem; font-weight: 300; line-height: 1.6; }
+  .modal-info { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.4rem; }
+  .modal-info-row { display: flex; align-items: center; gap: 0.55rem; font-size: 0.84rem; color: #444; }
+  .modal-info-row svg { stroke: var(--gold); flex-shrink: 0; }
+  .modal-ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .modal-ctas a {
+    flex: 1; min-width: 130px; text-align: center;
+    padding: 0.78rem 1rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+    text-decoration: none; transition: transform 0.15s, opacity 0.2s;
+  }
+  .modal-ctas a:hover { transform: translateY(-2px); opacity: 0.9; }
+  .modal-call { background: var(--gold); color: var(--dark); }
+  .modal-wa { background: #25D366; color: #fff; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(8px); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .info-item { padding: 0.8rem 1.2rem; font-size: 0.75rem; }
+    .menu-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .modal-img { height: 190px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Curries & All</div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <button class="nav-order-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-spice"></div>
+  <div class="hero-badge">🌶 Home Kitchen · Uvongo</div>
+  <h1>Curries<span>& All</span></h1>
+  <p class="hero-sub">Freshly made home cuisine — rich biryanis, slow-cooked curries & crispy samoosas, made with love by Beverly.</p>
+  <div class="hero-ctas">
+    <a href="#menu" class="btn-primary">View Menu</a>
+    <a href="#order" class="btn-secondary">Order Now</a>
+  </div>
+  <div class="hero-scroll">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    Scroll
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.44 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+    Beverly – 081 496 5712
+  </div>
+  <div class="info-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    5 Bairn Street, Uvongo
+  </div>
+  <div class="info-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Pre-orders Welcome
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header reveal">
+    <div class="section-label">What we cook</div>
+    <h2>Our Full Menu</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="menu-section">
+
+    <!-- BREYANIS -->
+    <div class="category-block reveal">
+      <div class="category-title"><span class="cat-icon">🍛</span> Breyanis <small style="font-size:0.85rem;color:#888;font-family:'Poppins',sans-serif;font-weight:400;">(Per Pot)</small></div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="openModal('Chicken Breyani','Breyanis (Per Pot)','R350','https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80" alt="Chicken Breyani" loading="lazy">
+            <div class="card-badge">Per Pot</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Chicken Breyani</div>
+            <div class="card-desc">Fragrant basmati, tender chicken, golden spices</div>
+            <div class="card-footer">
+              <span class="card-price">R350</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Mutton Breyani','Breyanis (Per Pot)','R500','https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600&q=80" alt="Mutton Breyani" loading="lazy">
+            <div class="card-badge">Per Pot</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Mutton Breyani</div>
+            <div class="card-desc">Slow-cooked mutton layered in aromatic rice</div>
+            <div class="card-footer">
+              <span class="card-price">R500</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Lamb Breyani','Breyanis (Per Pot)','R500','https://images.unsplash.com/photo-1645177628172-a94c1f96debb?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1645177628172-a94c1f96debb?w=600&q=80" alt="Lamb Breyani" loading="lazy">
+            <div class="card-badge">Per Pot</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Lamb Breyani</div>
+            <div class="card-desc">Fall-off-the-bone lamb, deeply spiced basmati</div>
+            <div class="card-footer">
+              <span class="card-price">R500</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRIES & RICE -->
+    <div class="category-block reveal">
+      <div class="category-title"><span class="cat-icon">🍽️</span> Curries & Rice <small style="font-size:0.85rem;color:#888;font-family:'Poppins',sans-serif;font-weight:400;">(Min 2 Portions)</small></div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="openModal('Chicken Curry & Rice','Curries & Rice','R65','https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=80" alt="Chicken Curry & Rice" loading="lazy">
+            <div class="card-badge">Per Portion</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Chicken Curry & Rice</div>
+            <div class="card-desc">Juicy chicken in rich curry sauce, served with rice</div>
+            <div class="card-footer">
+              <span class="card-price">R65</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Beef Curry & Rice','Curries & Rice','R85','https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="Beef Curry & Rice" loading="lazy">
+            <div class="card-badge">Per Portion</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Beef Curry & Rice</div>
+            <div class="card-desc">Hearty beef curry, bold spices, fluffy white rice</div>
+            <div class="card-footer">
+              <span class="card-price">R85</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Mutton Curry & Rice','Curries & Rice','R100','https://images.unsplash.com/photo-1574484284002-952d92a03a40?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1574484284002-952d92a03a40?w=600&q=80" alt="Mutton Curry & Rice" loading="lazy">
+            <div class="card-badge">Per Portion</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Mutton Curry & Rice</div>
+            <div class="card-desc">Tender mutton, slow-cooked in house masala</div>
+            <div class="card-footer">
+              <span class="card-price">R100</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Lamb Curry & Rice','Curries & Rice','R100','https://images.unsplash.com/photo-1602253057119-44d745d9b860?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1602253057119-44d745d9b860?w=600&q=80" alt="Lamb Curry & Rice" loading="lazy">
+            <div class="card-badge">Per Portion</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Lamb Curry & Rice</div>
+            <div class="card-desc">Succulent lamb, aromatic curry, steamed rice</div>
+            <div class="card-footer">
+              <span class="card-price">R100</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRIES PER POT -->
+    <div class="category-block reveal">
+      <div class="category-title"><span class="cat-icon">🥘</span> Curries <small style="font-size:0.85rem;color:#888;font-family:'Poppins',sans-serif;font-weight:400;">(Per Pot)</small></div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="openModal('Butter Chicken','Curries (Per Pot)','R350','https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&q=80" alt="Butter Chicken" loading="lazy">
+            <div class="card-badge">Per Pot</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Butter Chicken</div>
+            <div class="card-desc">Creamy tomato-butter sauce, silky and indulgent</div>
+            <div class="card-footer">
+              <span class="card-price">R350</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Beef Curry','Curries (Per Pot)','R425','https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Beef Curry" loading="lazy">
+            <div class="card-badge">Per Pot</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Beef Curry</div>
+            <div class="card-desc">Rich, deeply spiced pot of home-style beef curry</div>
+            <div class="card-footer">
+              <span class="card-price">R425</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Chicken Curry & Rice (Pot)','Curries (Per Pot)','R350','https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80" alt="Chicken Curry Pot" loading="lazy">
+            <div class="card-badge">Per Pot</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Chicken Curry & Rice</div>
+            <div class="card-desc">Full pot of golden chicken curry, ready to serve</div>
+            <div class="card-footer">
+              <span class="card-price">R350</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAMOOSAS -->
+    <div class="category-block reveal">
+      <div class="category-title"><span class="cat-icon">🥟</span> Samoosas <small style="font-size:0.85rem;color:#888;font-family:'Poppins',sans-serif;font-weight:400;">(Per Dozen)</small></div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="openModal('Beef Mince Samoosas','Samoosas (Per Dozen)','R100','https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80" alt="Beef Samoosas" loading="lazy">
+            <div class="card-badge">Per Dozen</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Beef Mince</div>
+            <div class="card-desc">Crispy pastry, spiced beef mince filling</div>
+            <div class="card-footer">
+              <span class="card-price">R100</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Chicken Samoosas','Samoosas (Per Dozen)','R90','https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600&q=80" alt="Chicken Samoosas" loading="lazy">
+            <div class="card-badge">Per Dozen</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Chicken</div>
+            <div class="card-desc">Golden-fried, packed with seasoned chicken</div>
+            <div class="card-footer">
+              <span class="card-price">R90</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Cheese & Sweetcorn Samoosas','Samoosas (Per Dozen)','R90','https://images.unsplash.com/photo-1625398407796-82650a8c135f?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1625398407796-82650a8c135f?w=600&q=80" alt="Cheese Sweetcorn Samoosas" loading="lazy">
+            <div class="card-badge">Per Dozen</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Cheese & Sweetcorn</div>
+            <div class="card-desc">Melty cheese and sweet corn — veggie delight</div>
+            <div class="card-footer">
+              <span class="card-price">R90</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card" onclick="openModal('Yellow Potato Samoosas','Samoosas (Per Dozen)','R60','https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80')">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80" alt="Potato Samoosas" loading="lazy">
+            <div class="card-badge">Per Dozen</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Yellow Potato</div>
+            <div class="card-desc">Classic spiced potato — crispy, comforting, veg</div>
+            <div class="card-footer">
+              <span class="card-price">R60</span>
+              <button class="card-btn">Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /menu-section -->
+</section>
+
+<!-- ORDER -->
+<section class="order-section" id="order">
+  <div class="section-label">Ready to eat?</div>
+  <h2>Place Your Order</h2>
+  <p>Call or WhatsApp Beverly directly. Pre-orders accepted for large pots & events.</p>
+  <div class="order-btns">
+    <a href="tel:0814965712" class="btn-call">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.44 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+      Call Beverly
+    </a>
+    <a href="https://wa.me/27814965712?text=Hi%20Beverly!%20I'd%20like%20to%20order%20from%20Curries%20%26%20All%20🍛" target="_blank" class="btn-wa">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Curries & All</div>
+  <p>
+    Freshly made home cuisine – Curries & All<br>
+    Beverly – <a href="tel:0814965712">081 496 5712</a> &nbsp;|&nbsp; 5 Bairn Street, Uvongo
+  </p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <hr class="modal-divider">
+      <div class="modal-desc">Freshly made home cuisine — prepared with love and authentic spices by Beverly. Pre-orders welcome for events and large quantities.</div>
+      <div class="modal-info">
+        <div class="modal-info-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.44 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+          Beverly – 081 496 5712
+        </div>
+        <div class="modal-info-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          5 Bairn Street, Uvongo
+        </div>
+      </div>
+      <div class="modal-ctas">
+        <a href="tel:0814965712" class="modal-call">📞 Call to Order</a>
+        <a href="https://wa.me/27814965712?text=Hi%20Beverly!%20I'd%20like%20to%20order%20from%20Curries%20%26%20All%20🍛" target="_blank" class="modal-wa">💬 WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal
+  function openModal(name, cat, price, img) {
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('modalCat').textContent = cat;
+    document.getElementById('modalPrice').textContent = price;
+    document.getElementById('modalImg').src = img;
+    document.getElementById('modalImg').alt = name;
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = (i % 3 * 0.1) + 's';
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
